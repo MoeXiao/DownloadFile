@@ -51,7 +51,11 @@ class DownloadFile_Action extends Typecho_Widget
             header("Content-Transfer-Encoding: binary");
             header("Content-Length: {$info['size']}");
             // download
-            $file = @fopen($_SERVER['DOCUMENT_ROOT'].$info['path'],"rb");
+            if(Typecho_Widget::widget('Widget_Options')->plugin('DownloadFile')->file_a!=""){
+                $file = @fopen(Typecho_Widget::widget('Widget_Options')->plugin('DownloadFile')->file_a.$info['path'],"rb");
+            }
+            else $file = @fopen($_SERVER['DOCUMENT_ROOT'].$info['path'],"rb");
+            // $file = @fopen("https://cdn1.moexc.com".$info['path'],"rb");
             if ($file) {
                 while(!feof($file)) {
                     print(fread($file, 1024*8));

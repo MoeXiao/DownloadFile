@@ -19,6 +19,7 @@ class DownloadFile_Plugin implements Typecho_Plugin_Interface
      */
     public static function activate()
     {
+        // Typecho_Plugin::factory('admin/menu.php')->navBar = array('DownloadFile_Plugin', 'File_A');
         Typecho_Plugin::factory('admin/write-post.php')->bottom = array('DownloadFile_Plugin', 'bottomJS');
         Typecho_Plugin::factory('admin/write-page.php')->bottom = array('DownloadFile_Plugin', 'bottomJS');
         // 创建路由
@@ -37,8 +38,16 @@ class DownloadFile_Plugin implements Typecho_Plugin_Interface
         Helper::removeRoute('download.file');
     }
 
-    public static function config(Typecho_Widget_Helper_Form $form){}
+    public static function config(Typecho_Widget_Helper_Form $form){
+        $file_a = new Typecho_Widget_Helper_Form_Element_Text('file_a', NULL,'', _t('欢迎使用DownloadFile！</br>如果你没有使用COS\OSS之类对象存储，则放空即可！</br>如果你的附件使用了COS\OSS之类的对象存储请在框内设置你的文件存储地址（包含https://或者http://）：'));
+        $form->addInput($file_a);
+    }
+    
     public static function personalConfig(Typecho_Widget_Helper_Form $form){}
+    
+    // public static function File_A(){
+        
+    // }
 
     public static function bottomJS()
     {
